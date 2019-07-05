@@ -1,0 +1,89 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name" default="robot"/>
+  <arg name="xcoordinate" default="0.0"/>
+  <arg name="ycoordinate" default="0.0"/>
+  <arg name="zcoordinate" default="0.0"/>
+  <arg name="roll" default="0.0"/>
+  <arg name="pitch" default="0.0"/>
+  <arg name="yaw" default="0.0"/>
+  <group ns="$(arg robot_name)">
+    <param name="tf_prefix" type="string" value="$(arg robot_name)"/>      
+    <rosparam command="load" 
+      file="$(find centaur)/config/centaur/centaur_default_controllers.yaml"/> 
+    <rosparam command="load" 
+      file="$(find centaur)/config/centaur/centaur_joint_limits.yaml"/>
+    <rosparam command="load" 
+      file="$(find centaur)/config/centaur/centaur_thor_mang_hand_parameters.yaml"/>
+    <!--
+    <rosparam command="load" file="$(find centaur)/config/centaur/obelix_flippers_gazebo.yaml"/>
+    <rosparam command="load" file="$(find centaur)/config/centaur/vt_hand_left_controllers.yaml"/>
+    <rosparam command="load" file="$(find centaur)/config/centaur/vt_hand_left_trajectory_controllers.yaml"/>
+    <rosparam command="load" file="$(find centaur)/config/centaur/vt_hand_left_trajectory_sim_controllers.yaml"/>
+    <rosparam command="load" file="$(find centaur)/config/centaur/vt_hand_right_controllers.yaml"/>
+    <rosparam command="load" file="$(find centaur)/config/centaur/vt_hand_right_trajectory_controllers.yaml"/>
+    <rosparam command="load" file="$(find centaur)/config/centaur/vt_hand_right_trajectory_sim_controllers.yaml"/>
+-->
+    <!-- robot_description is needed for gazebo_ros package. -->
+    <!-- Following was not working -->
+    <!--
+    <param name="robot_description" command="$(find xacro)/xacro '$(find hector_centaur_description)/robots/centaur_default.urdf.xacro' robot_name:=$(arg robot_name)"/>
+-->
+    <param name="robot_description" 
+           textfile="$(find centaur)/urdf/centaur.urdf"/>
+		<node pkg="gazebo_ros" type="spawn_model"
+          respawn="false"
+          name="spawn_model"
+          args="-file $(find centaur)/sdf/model.sdf -sdf -x $(arg xcoordinate) -y $(arg ycoordinate) -z $(arg zcoordinate) -R $(arg roll) -P $(arg pitch) -Y $(arg yaw) -model $(arg robot_name)"/>
+    <!-- load the controllers -->
+    <node name="controller_spawner" 
+          pkg="controller_manager" type="spawner" respawn="false" 
+          output="screen"
+          args="joint_state_controller           
+                head_lidar_controller
+                flipper_traj_controller
+                left_arm_traj_controller
+                right_arm_traj_controller
+                torso_traj_controller
+                head_traj_controller
+                left_hand_traj_controller
+                right_hand_traj_controller"/>
+<!--
+            imu_sensor_controller
+-->
+
+    <node name="robot_state_publisher"
+          pkg="robot_state_publisher" type="robot_state_publisher">
+      <!--
+      <param name="publish_frequency" type="double" value="100.0"/>
+      <param name="tf_prefix" type="string" value="$(arg robot_name)"/>
+      <remap from="joint_states" to="$(arg robot_name)/joint_states"/>
+      <remap from="robot_description" to="robot_description_thor_mang"/>
+      -->
+    </node>  
+
+<!--
+    <node pkg="joint_state_publisher" type="joint_state_publisher" name="joint_state_publisher" output="screen">
+      <param name="publish_frequency" type="double" value="15.0" />
+      <param name="use_gui" value="false" />
+      <param name="tf_prefix" type="string" value="$(arg robot_name)" />
+    </node>
+-->
+
+    <node name="tf_static_odom2base" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 $(arg robot_name)/odom $(arg robot_name)/base_link 100"/>
+<!--    
+    <node name="tf_static_cbase2base" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 $(arg robot_name)/base_link base_link 100"/>    
+-->
+
+<!--
+    <node name="tf_static_odom2base" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 odom base_link 100"/>
+    <node name="tf_static_base2pelvis" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 base_link pelvis 100"/>
+    <node name="tf_static_lhand2lpalm" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 l_hand l_palm 100"/>
+    <node name="tf_static_rhand2rpalm" pkg="tf" type="static_transform_publisher" args="0 0 0 0 0 0 r_hand r_palm 100"/>    
+-->
+    <node name="centaur_init_pose" pkg="centaur" type="centaur_init_pose"/>
+
+  </group>
+
+</launch>
+

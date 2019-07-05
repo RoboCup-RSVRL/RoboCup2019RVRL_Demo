@@ -1,0 +1,115 @@
+<?xml version="1.0"?>
+<sdf version="1.5">
+  <world name="default">
+    <gui fullscreen='0'>
+      <camera name='user_default'>
+        <pose frame=''>0.602948 -0.001582 0.357965 -0 0.6 -3.141</pose>
+        <view_controller>orbit</view_controller>
+        <projection_type>perspective</projection_type>
+      </camera>
+    </gui>
+
+    <include>
+      <uri>model://ground_plane</uri>
+    </include>
+
+    <include>
+      <uri>model://sun</uri>
+    </include>
+
+<!--    <include>
+      <uri>model://crawler_robot_ros</uri>
+      <name>robot</name>
+      <pose>0 0 0.03 0 0 3.14</pose>
+    </include> -->
+
+    <model name="stairs">
+      <pose>1 0 0 0 0 0</pose>
+      <static>true</static>
+      <link name="step1">
+        <pose>0 0 0.05 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box> <size>0.3 1.0 0.1</size> </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box> <size>0.3 1.0 0.1</size> </box>
+          </geometry>
+        </visual>
+      </link>
+      <link name="step2">
+        <pose>0.3 0 0.15 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box> <size>0.3 1.0 0.1</size> </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box> <size>0.3 1.0 0.1</size> </box>
+          </geometry>
+        </visual>
+      </link>
+      <link name="step3">
+        <pose>0.6 0 0.25 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box> <size>0.3 1.0 0.1</size> </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box> <size>0.3 1.0 0.1</size> </box>
+          </geometry>
+        </visual>
+      </link>
+      <link name="step4">
+        <pose>0.9 0 0.35 0 0 0</pose>
+        <collision name="collision">
+          <geometry>
+            <box> <size>0.3 1.0 0.1</size> </box>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <box> <size>0.3 1.0 0.1</size> </box>
+          </geometry>
+        </visual>
+      </link>
+    </model>
+
+    <model name="sphere">
+      <pose>0 1.5 0.5 0 0 0</pose>
+      <link name="link">
+        <collision name="collision">
+          <geometry>
+            <sphere>
+              <radius>0.5</radius>
+            </sphere>
+          </geometry>
+        </collision>
+        <visual name="visual">
+          <geometry>
+            <sphere>
+              <radius>0.5</radius>
+            </sphere>
+          </geometry>
+          <material>
+            <script>Gazebo/WoodPallet</script>
+          </material>
+        </visual>
+        <audio_source>
+          <uri>file://media/audio/cheer.wav</uri>
+          <pitch>2.0</pitch>
+          <gain>1.0</gain>
+          <loop>false</loop>
+          <contact>
+            <collision>collision</collision>
+          </contact>
+        </audio_source>
+      </link>
+    </model>
+  </world>
+</sdf>

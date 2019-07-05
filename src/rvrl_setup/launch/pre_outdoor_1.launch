@@ -1,0 +1,59 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="paused" default="false"/>
+	<arg name="gui" default="true"/>
+	<arg name="verbose" default="true"/>
+	<arg name="world" default="map_pre_outdoor_1.world"/>
+  <arg name="use_teleop" default="true"/>
+  <param name="use_sim_time" value="true"/>		
+
+  <!-- Launch Gazebo -->
+  <node name="gazebo" pkg="gazebo_ros" type="gzserver" respawn="false" 
+         output="screen" args="$(find rvrl_setup)/worlds/$(arg world)"/>
+  <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" 
+         output="screen"/>
+
+  <!-- Make robot_description and run robot_state_publisher --> 
+  <include file="$(find rvrl_setup)/launch/spawn_a_robot.launch">
+    <arg name="robot_name"  value="robot1"/>
+    <arg name="robot_type"  value="pioneer2dx"/> <!-- ROBOT_TYPE: pioneer3at , pioneer2dx , centaur , quadrotor , crawler -->
+    <arg name="xcoordinate" value="1.0"/>
+    <arg name="ycoordinate" value="1.0"/>
+    <arg name="zcoordinate" value="0.03"/>
+    <arg name="yaw"         value="0.0"/>
+  </include> 
+  <include file="$(find rvrl_setup)/launch/spawn_a_robot.launch">
+    <arg name="robot_name"  value="robot2"/>
+    <arg name="robot_type"  value="pioneer3at"/> <!-- ROBOT_TYPE: pioneer3at , pioneer2dx , centaur , quadrotor , crawler -->
+    <arg name="xcoordinate" value="-1.0"/>
+    <arg name="ycoordinate" value="1.0"/>
+    <arg name="zcoordinate" value="0.03"/>
+    <arg name="yaw"         value="1.57"/>
+  </include> 
+  <include file="$(find rvrl_setup)/launch/spawn_a_robot.launch">
+    <arg name="robot_name"  value="robot3"/>
+    <arg name="robot_type"  value="quadrotor"/> <!-- ROBOT_TYPE: pioneer3at , pioneer2dx , centaur , quadrotor , crawler -->
+    <arg name="xcoordinate" value="1.0"/>
+    <arg name="ycoordinate" value="-1.0"/>
+    <arg name="zcoordinate" value="0.03"/>
+    <arg name="yaw"         value="0.0"/>
+  </include> 
+  <include file="$(find rvrl_setup)/launch/spawn_a_robot.launch">
+    <arg name="robot_name"  value="robot4"/>
+    <arg name="robot_type"  value="crawler"/> <!-- ROBOT_TYPE: pioneer3at , pioneer2dx , centaur , quadrotor , crawler -->
+    <arg name="xcoordinate" value="-1.0"/>
+    <arg name="ycoordinate" value="-1.0"/>
+    <arg name="zcoordinate" value="0.03"/>
+    <arg name="yaw"         value="4.71"/>
+  </include> 
+  <include file="$(find rvrl_setup)/launch/spawn_a_robot.launch">
+    <arg name="robot_name"  value="robot5"/>
+    <arg name="robot_type"  value="centaur"/> <!-- ROBOT_TYPE: pioneer3at , pioneer2dx , centaur , quadrotor , crawler -->
+    <arg name="xcoordinate" value=" 0.0"/>
+    <arg name="ycoordinate" value=" 0.0"/>
+    <arg name="zcoordinate" value="0.03"/>
+    <arg name="yaw"         value="3.14"/>
+  </include> 
+</launch>
+
+

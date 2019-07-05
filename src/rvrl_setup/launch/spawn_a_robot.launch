@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+  <arg name="robot_name"  default="robot"/>
+  <arg name="robot_type"  default="pioneer3at"/> <!-- ROBOT_TYPE: pioneer3at , pioneer2dx , centaur , quadrotor , crawler -->
+  <arg name="xcoordinate" default="0.0"/>
+  <arg name="ycoordinate" default="0.0"/>
+  <arg name="zcoordinate" default="0.0"/>
+  <arg name="roll"        default="0.0"/>
+  <arg name="pitch"       default="0.0"/>
+  <arg name="yaw"         default="0.0"/>
+  <include file="$(find rvrl_setup)/launch/make_robot_description_and_call_state_publisher_$(arg robot_type).launch">
+    <arg name="robot_name"  value="$(arg robot_name)"/>
+    <arg name="xcoordinate" value="$(arg xcoordinate)"/>
+    <arg name="ycoordinate" value="$(arg ycoordinate)"/>
+    <arg name="zcoordinate" value="$(arg zcoordinate)"/>
+    <arg name="roll"        value="$(arg roll)"/>
+    <arg name="pitch"       value="$(arg pitch)"/>
+    <arg name="yaw"         value="$(arg yaw)"/>
+  </include> 
+</launch>
