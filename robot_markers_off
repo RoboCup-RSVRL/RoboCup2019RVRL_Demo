@@ -1,0 +1,2 @@
+#!/bin/bash
+gz marker -m "action:DELETE_ALL"

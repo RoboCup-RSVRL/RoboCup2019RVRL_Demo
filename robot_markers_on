@@ -1,0 +1,7 @@
+#!/bin/bash
+gz marker -m "action:DELETE_ALL"
+gz marker -m 'action:ADD_MODIFY, type:TEXT, text:"ROBOT1", id:1, parent:"robot1", pose:{position:{x:0,y:0.0,z:5}},scale:{x:5,y:5,z:5}'
+gz marker -m 'action:ADD_MODIFY, type:TEXT, text:"ROBOT2", id:2, parent:"robot2", pose:{position:{x:0,y:0.0,z:5}},scale:{x:5,y:5,z:5}'
+gz marker -m 'action:ADD_MODIFY, type:TEXT, text:"ROBOT3", id:3, parent:"robot3", pose:{position:{x:0,y:0.0,z:5}},scale:{x:5,y:5,z:5}'
+gz marker -m 'action:ADD_MODIFY, type:TEXT, text:"ROBOT4", id:4, parent:"robot4", pose:{position:{x:0,y:0.0,z:5}},scale:{x:5,y:5,z:5}'
+gz marker -m 'action:ADD_MODIFY, type:TEXT, text:"BASE", id:5, parent:"robot0", pose:{position:{x:0,y:0.0,z:5}},scale:{x:5,y:5,z:5}'
