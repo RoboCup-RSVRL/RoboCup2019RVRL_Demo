@@ -23,8 +23,8 @@ WCS has a custom message type, the message type will be compling later than WCS 
 Thus, please do "catkin_make" 4 times, with ignoring errors about WCS package.  
 After 4 times catkin_make, if you still encount some errors, please contact us.  
 
-    $ git clone https://github.com/RoboCupRescueVirtualRobotLeague/RoboCup2019RVRL_Practice  
-    $ cd ~/RoboCup2019RVRL_Practice/src  
+    $ git clone https://github.com/RoboCupRescueVirtualRobotLeague/RoboCup2019RVRL_Demo  
+    $ cd ~/RoboCup2019RVRL_Demo/src  
     $ git clone -b Gazebo8 https://github.com/taherahmadi/WCS  
     $ cd ..  
     $ ./cleanup  
@@ -37,28 +37,25 @@ After 4 times catkin_make, if you still encount some errors, please contact us.
 Select one launch file and spawn the server application.  
 Then goto the next section "Run the robot controller".  
 
-### Launch the gazebo server and robots 1: maze_3levels.launch   
-This world has 3 levels and one pioneer3at robot.  
+### Launch the gazebo server and robots (Case 1): two-levels.launch   
+This world has 2 levels, 4 pioneer3at robots, and 4 victims including 2 hot victims.  
 Each level dimension is 10m x 10m.  
-The lowest level and the middle level is connected by a 30 degree slope.  
-The 30 deglee slope dimension is 3m holizontal length and about 1.7m high.  
-The middle level and the top level is connected by a 20 degree slope.  
+The lowest level and the top level are connected by a 20 degree slope.  
 The 20 deglee slope dimension is 3m holizontal length and about 1.1m high.  
 The pioneer3at robot can climb the 30 degree slope, but pioneer2dx cannot.  
-How about a crowler robot?  
 
     At terminal 1:  
 
-    $ cd ~/RoboCup2019RVRL_Practice  
+    $ cd ~/RoboCup2019RVRL_Demo  
     $ . setup.bash  
-    $ roslaunch rvrl_setup maze-3levels.launch  
+    $ roslaunch rvrl_setup two-levels.launch  
 
-### Launch the gazebo server and robots 2: pre_outdoor_1.launch   
+### Launch the gazebo server and robots (Case 2): pre_outdoor_1.launch   
 This world includes the RoboCup WCS 2018 pre_outdoor_1 world and 5 type robots.  
 
     At terminal 1:  
 
-    $ cd ~/RoboCup2019RVRL_Practice  
+    $ cd ~/RoboCup2019RVRL_Demo  
     $ . setup.bash  
     $ roslaunch rvrl_setup pre_outdoor_1.launch  
 
@@ -73,7 +70,7 @@ This world includes the RoboCup WCS 2018 pre_outdoor_1 world and 5 type robots.
 
     At terminal 2:  
 
-    $ cd ~/RoboCup2019RVRL_Practice  
+    $ cd ~/RoboCup2019RVRL_Demo  
     $ . setup.bash  
     $ roslaunch hector_quadrotor_teleop logitech_gamepad.launch robot:=robot1  
     (Push button4, to start motors)  
@@ -82,7 +79,7 @@ This world includes the RoboCup WCS 2018 pre_outdoor_1 world and 5 type robots.
 
     At terminal 2:  
 
-    $ cd ~/RoboCup2019RVRL_Practice  
+    $ cd ~/RoboCup2019RVRL_Demo  
     $ . setup.bash  
     $ roslaunch rvrl_setup sample_joy_and_teleop_crawler.launch gc_bsgp1601:=true robot_name:=robot1  
     (You can select your game controller from 4 types, details in the launch file.)  
@@ -91,7 +88,7 @@ This world includes the RoboCup WCS 2018 pre_outdoor_1 world and 5 type robots.
 
     At terminal 2:  
 
-    $ cd ~/RoboCup2019RVRL_Practice  
+    $ cd ~/RoboCup2019RVRL_Demo  
     $ . setup.bash  
     $ roslaunch rvrl_setup sample_centaur_joint_trajectory.launch robot_name:=robot5  
 
@@ -102,4 +99,4 @@ This world includes the RoboCup WCS 2018 pre_outdoor_1 world and 5 type robots.
 ### About WCS  
 Please read the documents of [WCS](https://github.com/taherahmadi/WCS/blob/master/README.md) and [WCS sample package](https://github.com/taherahmadi/WCS/blob/master/sample_package/README.md).  
 
-Edited: 14th June 2019
+Edited: 5th July 2019
