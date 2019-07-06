@@ -1,4 +1,7 @@
 # RoboCup2019 Rescue Simulation Virtual Robot League
+This repository includes a robot model and field models used in RoboCup World Champion Ship 2019 Rescue Simulation Virtual Robot League(RC2019RVRL).  
+You can find other records of the RC2019RVRL game in [wiki page of this repository](https://github.com/RoboCupRescueVirtualRobotLeague/RoboCup2019RVRL_Demo/wiki).
+And you can find important information like the latest rule in [the rescue virtual robot league wiki page](https://rescuesim.robocup.org/).  
 
 ##  Installation   
 You can install Ros(Kinetic), Gazebo 8, necessary packages by the following command using the ubuntu 16.04:  
