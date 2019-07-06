@@ -3,7 +3,7 @@ This repository includes a robot model and field models used in RoboCup World Ch
 You can find other records of the RC2019RVRL game in [wiki page of this repository](https://github.com/RoboCupRescueVirtualRobotLeague/RoboCup2019RVRL_Demo/wiki).
 And you can find important information like the latest rule in [the rescue virtual robot league wiki page](https://rescuesim.robocup.org/).  
 
-##  Installation   
+##  INSTALLATION BASICS   
 You can install Ros(Kinetic), Gazebo 8, necessary packages by the following command using the ubuntu 16.04:  
 
     $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'   
@@ -15,12 +15,10 @@ You can install Ros(Kinetic), Gazebo 8, necessary packages by the following comm
     $ sudo apt-get install ros-kinetic-hector-pose-estimation ros-kinetic-hector-sensors-description ros-kinetic-controller-manager ros-kinetic-gmapping ros-kinetic-move-base ros-kinetic-hector-mapping ros-kinetic-gazebo8*
 
 
-##  Network Setup
+## SETUP THE NETWORK CONFIGURATION  
+Check the network folder and setup your computer based on the corresponding files.  
 
-check the network folder and setup your computer based on the corresponding files.  
-
-
-## Server Setup
+## SETUP THE SERVER PROGRAM  
 You have to do "catkin_make" 4 times for building WCS.  
 WCS has a custom message type, the message type will be compling later than WCS source codes, even if their dependencies was defined.  
 Thus, please do "catkin_make" 4 times, with ignoring errors about WCS package.  
@@ -36,33 +34,45 @@ After 4 times catkin_make, if you still encount some errors, please contact us.
     $ catkin_make  
     $ catkin_make  
 
-## Server Setup  
-Select one launch file and spawn the server application.  
-Then goto the next section "Run the robot controller".  
-
-### Launch the gazebo server and robots (Case 1): two-levels.launch   
-This world has 2 levels, 4 pioneer3at robots, and 4 victims including 2 hot victims.  
-Each level dimension is 10m x 10m.  
-The lowest level and the top level are connected by a 20 degree slope.  
-The 20 deglee slope dimension is 3m holizontal length and about 1.1m high.  
-The pioneer3at robot can climb the 30 degree slope, but pioneer2dx cannot.  
+## RUN THE SERVER PROGRAM  
+Launch the gazebo server and robots.  
+Select one launch file from following descriptions.  
+And do next sequence with your selected launch file.  
+Then goto the next section "CHECK THE INSTALLATION".  
 
     At terminal 1:  
 
     $ cd ~/RoboCup2019RVRL_Demo  
     $ . setup.bash  
-    $ roslaunch rvrl_setup two-levels.launch  
+    $ roslaunch rvrl_setup YOU_SELECTED_ONE.launch  
 
-### Launch the gazebo server and robots (Case 2): pre_outdoor_1.launch   
-This world includes the RoboCup WCS 2018 pre_outdoor_1 world and 5 type robots.  
+### Pre liminary 1 (Day 1)
+* pre1-1_{ atr | eslam | mrl }.launch  
+Three launch files are same except robot names.  
+Those robot names are changed for the each team programs.  
 
-    At terminal 1:  
+### Pre liminary 2 (Day 1)
+* pre1-2_{ atr | eslam | mrl }.launch  
+Three launch files are same except robot names.  
+Those robot names are changed for the each team programs.  
 
-    $ cd ~/RoboCup2019RVRL_Demo  
-    $ . setup.bash  
-    $ roslaunch rvrl_setup pre_outdoor_1.launch  
+### Pre liminary 3 (Day 2)
+* pre2-1_{ atr | eslam | mrl }.launch  
+Three launch files are same except robot names.  
+Those robot names are changed for the each team programs.  
 
-## Run the robot controller
+### Pre liminary 4 (Day 2)
+* pre2-2_{ atr | eslam | mrl }.launch  
+Three launch files are same except robot names.  
+Those robot names are changed for the each team programs.  
+
+### Semi Final 1 (Day 3)
+* two-levels.launch   
+This is a practice field for the slope.  
+
+## CHECK THE INSTALLATION
+Run the sample robot controller.  
+
 ### For wheel robots  
 
     At terminal 2:  
