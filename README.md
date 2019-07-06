@@ -112,4 +112,13 @@ Run the sample robot controller.
 ### About WCS  
 Please read the documents of [WCS](https://github.com/taherahmadi/WCS/blob/master/README.md) and [WCS sample package](https://github.com/taherahmadi/WCS/blob/master/sample_package/README.md).  
 
-Edited: 5th July 2019
+### For finding robots in a huge field  
+Waiting for finishing spawning all robots, run the next script.  
+You can see each robot name in large font size. 
+
+    At another terminal:  
+
+    $ cd ~/RoboCup2019RVRL_Demo  
+    $ . robot_marker_on  
+
+Edited: 6th July 2019  
