@@ -67,8 +67,17 @@ Three launch files are same except robot names.
 Those robot names are changed for the each team programs.  
 
 ### Semi Final 1 (Day 3)
+* semi-1-{ atr | eslam | mrl }.launch  
+Three launch files are same except robot names.  
+Those robot names are changed for the each team programs.  
+
 * two-levels.launch   
 This is a practice field for the slope.  
+
+### Semi Final 2 (Day 3)
+* semi-2-{ atr | eslam | mrl }.launch  
+Three launch files are same except robot names.  
+Those robot names are changed for the each team programs.  
 
 ## CHECK THE INSTALLATION
 Run the sample robot controller.  

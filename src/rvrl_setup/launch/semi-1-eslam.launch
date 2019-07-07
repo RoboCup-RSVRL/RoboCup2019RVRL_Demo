@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="paused" default="false"/>
+	<arg name="gui" default="true"/>
+	<arg name="verbose" default="true"/>
+	<arg name="world" default="RoboCup2019-semi-1.world"/>
+  <arg name="use_teleop" default="true"/>
+  <param name="use_sim_time" value="true"/>		
+
+  <!-- Launch Gazebo -->
+  <node name="gazebo" pkg="gazebo_ros" type="gzserver" respawn="false" 
+         output="screen" args="$(find rvrl_setup)/worlds/$(arg world)"/>
+  <node name="gazebo_gui" pkg="gazebo_ros" type="gzclient" respawn="false" 
+         output="screen"/>
+
+  <!-- Make robot_description and run robot_state_publisher --> 
+  <include file="$(find rvrl_setup)/launch/spawn_a_robot.launch">
+    <arg name="robot_name"  value="robot0"/>
+    <arg name="robot_type"  value="pioneer3at"/> <!-- ROBOT_TYPE: pioneer3at , pioneer2dx , centaur , quadrotor , crawler -->
+    <arg name="xcoordinate" value="0"/>
+    <arg name="ycoordinate" value="0"/>
+    <arg name="zcoordinate" value="0.3"/>
+    <arg name="yaw"         value="1.57"/>
+  </include> 
+
+  <include file="$(find rvrl_setup)/launch/spawn_a_robot.launch">
+    <arg name="robot_name"  value="robot1"/>
+    <arg name="robot_type"  value="pioneer3at"/> <!-- ROBOT_TYPE: pioneer3at , pioneer2dx , centaur , quadrotor , crawler -->
+    <arg name="xcoordinate" value="15"/>
+    <arg name="ycoordinate" value="84"/>
+    <arg name="zcoordinate" value="1.3"/>
+    <arg name="yaw"         value="1.57"/>
+  </include> 
+
+  <include file="$(find rvrl_setup)/launch/spawn_a_robot.launch">
+    <arg name="robot_name"  value="robot2"/>
+    <arg name="robot_type"  value="pioneer3at"/> <!-- ROBOT_TYPE: pioneer3at , pioneer2dx , centaur , quadrotor , crawler -->
+    <arg name="xcoordinate" value="-15"/>
+    <arg name="ycoordinate" value="160"/>
+    <arg name="zcoordinate" value="2.4"/>
+    <arg name="yaw"         value="1.57"/>
+  </include> 
+
+
+</launch>
+
+
