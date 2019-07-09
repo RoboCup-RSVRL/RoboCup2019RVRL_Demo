@@ -79,6 +79,11 @@ This is a practice field for the slope.
 Three launch files are same except robot names.  
 Those robot names are changed for the each team programs.  
 
+### Final (Day 4)
+* final-1-{ atr | eslam | mrl }.launch  
+Three launch files are same except robot names.  
+Those robot names are changed for the each team programs.  
+
 ## CHECK THE INSTALLATION
 Run the sample robot controller.  
 
