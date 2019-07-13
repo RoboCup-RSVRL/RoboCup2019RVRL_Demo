@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<launch>
+  <include file="$(find rvrl_setup)/launch/pre1-1_mrl.launch"/>
+  <node name="image_view" pkg="rqt_image_view" type="rqt_image_view"
+    respawn="false" output="screen"/>
+  <node name="joy_node" pkg="joy" type="joy_node"
+    respawn="false" output="screen">
+  </node>
+  <node name="teleop_node" pkg="teleop_twist_joy" type="teleop_node"
+    respawn="false" output="screen">
+    <rosparam>
+      enable_turbo_button: 1
+    </rosparam>
+    <remap from="cmd_vel" to="/robot1/cmd_vel"/>
+  </node>
+</launch>
+
+
