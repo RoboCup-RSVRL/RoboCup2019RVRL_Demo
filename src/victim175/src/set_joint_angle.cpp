@@ -1,4 +1,4 @@
-/*  This file was reformed 
+/*  This file was reformed
        by Masaru Shimizu
          for RoboCup 2017 Rescue Virtual Robot League
            at 23.July.2017  */
@@ -26,8 +26,8 @@
     (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
     LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
     ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
-    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
-    SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+    (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF
+   THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 
 */
 
@@ -43,7 +43,6 @@
  * $ Id: 06/21/2013 11:23:40 AM piyushk $
  */
 
-
 /*
  *
  * The support of acceleration limit was added by
@@ -57,219 +56,190 @@
 
 #include "set_joint_angle.h"
 
-#include <gazebo/math/gzmath.hh>
+//#include <gazebo/math/gzmath.hh>
 #include <sdf/sdf.hh>
 
 //#include <ros/ros.h>
 
 #define D_maxAngles 30
 #define maxLengthAngleName 30
-const char* angleTagName[D_maxAngles]={"angleName0", 
-                                 "angleName1",
-                                 "angleName2",
-                                 "angleName3",
-                                 "angleName4",
-                                 "angleName5",
-                                 "angleName6",
-                                 "angleName7",
-                                 "angleName8",
-                                 "angleName9",
-                                "angleName10",
-                                "angleName11",
-                                "angleName12",
-                                "angleName13",
-                                "angleName14",
-                                "angleName15",
-                                "angleName16",
-                                "angleName17",
-                                "angleName18",
-                                "angleName19",
-                                "angleName20",
-                                "angleName21",
-                                "angleName22",
-                                "angleName23",
-                                "angleName24",
-                                "angleName25",
-                                "angleName26",
-                                "angleName27",
-                                "angleName28",
-                                "angleName29" };
+const char *angleTagName[D_maxAngles] = {
+    "angleName0",  "angleName1",  "angleName2",  "angleName3",  "angleName4",
+    "angleName5",  "angleName6",  "angleName7",  "angleName8",  "angleName9",
+    "angleName10", "angleName11", "angleName12", "angleName13", "angleName14",
+    "angleName15", "angleName16", "angleName17", "angleName18", "angleName19",
+    "angleName20", "angleName21", "angleName22", "angleName23", "angleName24",
+    "angleName25", "angleName26", "angleName27", "angleName28", "angleName29"};
 
-
-namespace gazebo
-{
+namespace gazebo {
 
 // Constructor
-setJointAngle::setJointAngle(void) 
-{
+setJointAngle::setJointAngle(void) {
   targetAngles = NULL;
-//  angleName   = (typeof angleName)NULL;
+  //  angleName   = (typeof angleName)NULL;
 }
 
 // Destructor
-setJointAngle::~setJointAngle() 
-{
-  if(NULL!=targetAngles)
+setJointAngle::~setJointAngle() {
+  if (NULL != targetAngles)
     delete targetAngles;
-//  if((typeof angleName)NULL!=angleName)
-//    delete angleName;
+  //  if((typeof angleName)NULL!=angleName)
+  //    delete angleName;
 }
 
-void setJointAngle::getParameter_int(int& dst, const char* tagName, int defaultValue)
-{
-  if(!sdf->HasElement(tagName))
+void setJointAngle::getParameter_int(int &dst, const char *tagName,
+                                     int defaultValue) {
+  if (!sdf->HasElement(tagName))
     dst = defaultValue;
   else
     dst = sdf->GetElement(tagName)->Get<int>();
 }
 
-void setJointAngle::getParameter_double(double& dst, const char* tagName, double defaultValue)
-{
-  if(!sdf->HasElement(tagName))
+void setJointAngle::getParameter_double(double &dst, const char *tagName,
+                                        double defaultValue) {
+  if (!sdf->HasElement(tagName))
     dst = defaultValue;
   else
     dst = sdf->GetElement(tagName)->Get<double>();
 }
 
-void setJointAngle::getParameter_string(std::string& dst, const char* tagName, const char* defaultValue)
-{
-  if(!sdf->HasElement(tagName))
+void setJointAngle::getParameter_string(std::string &dst, const char *tagName,
+                                        const char *defaultValue) {
+  if (!sdf->HasElement(tagName))
     dst = defaultValue;
   else
     dst = sdf->GetElement(tagName)->Get<std::string>();
 }
 
 // Load the controller
-void setJointAngle::Load ( physics::ModelPtr _parent, sdf::ElementPtr _sdf )
-{
+void setJointAngle::Load(physics::ModelPtr _parent, sdf::ElementPtr _sdf) {
   this->parent = _parent;
-  this->sdf    = _sdf;
-  
-/*
-  gazebo_ros_ = GazeboRosPtr ( new GazeboRos ( _parent, _sdf, "setJointAngle" ) );
-  // Make sure the ROS node for Gazebo has already been initialized
-  gazebo_ros_->isInitialized();
-*/
+  this->sdf = _sdf;
+
+  /*
+    gazebo_ros_ = GazeboRosPtr ( new GazeboRos ( _parent, _sdf, "setJointAngle"
+    ) );
+    // Make sure the ROS node for Gazebo has already been initialized
+    gazebo_ros_->isInitialized();
+  */
 
   node = transport::NodePtr(new transport::Node());
-  node->Init(this->parent->GetWorld()->GetName());
-  
+  node->Init(this->parent->GetWorld()->Name());
+
   getParameter_int(maxAngles, "maxAngles", 0);
   getParameter_int(moveFlag, "moveOn", 0);
-  getParameter_int(moveJoint,"moveJoint", 0);
-  getParameter_double(moveAngleWidth,"moveAngleWidth", 0);
-  if(moveJoint >= maxAngles)
+  getParameter_int(moveJoint, "moveJoint", 0);
+  getParameter_double(moveAngleWidth, "moveAngleWidth", 0);
+  if (moveJoint >= maxAngles)
     moveFlag = 0;
-//  gazebo_ros_->getParameter<int> (maxAngles, "maxAngles", 0);
-  if(0==maxAngles)
-  {
+  //  gazebo_ros_->getParameter<int> (maxAngles, "maxAngles", 0);
+  if (0 == maxAngles) {
     printf("[ERR] setJointAngle : no maxAngles\n");
     return;
   }
   targetAngles = new double[maxAngles];
   angleNames.resize(maxAngles);
   joints.resize(maxAngles);
-  for(int i=0; i < maxAngles; i++)
-  {
+  for (int i = 0; i < maxAngles; i++) {
     getParameter_string(angleNames[i], angleTagName[i], "");
     getParameter_double(targetAngles[i], angleNames[i].c_str(), (double)0.0);
-    if(0<angleNames[i].size())
+    if (0 < angleNames[i].size())
       joints[i] = parent->GetJoint(angleNames[i].c_str());
-    else
-    {
+    else {
       joints[i] = 0;
       std::cout << "Error getting joint name: " << angleTagName[i] << "\n";
     }
-/*  
-    gazebo_ros_->getParameter<std::string> ( angleNames[i], angleTagName[i], "" );
-    gazebo_ros_->getParameter<double> ( targetAngles[i], angleNames[i].c_str(), (double)0.0);
-    joints[i] = gazebo_ros_->getJoint ( parent, angleTagName[i], "" );
-*/
-    if(0!=angleNames[i].size() && 0==joints[i])
+    /*
+        gazebo_ros_->getParameter<std::string> ( angleNames[i], angleTagName[i],
+       "" ); gazebo_ros_->getParameter<double> ( targetAngles[i],
+       angleNames[i].c_str(), (double)0.0); joints[i] = gazebo_ros_->getJoint (
+       parent, angleTagName[i], "" );
+    */
+    if (0 != angleNames[i].size() && 0 == joints[i])
       std::cout << "Error getting joint: " << angleNames[i] << "\n";
   }
 
-  last_update_time_ = parent->GetWorld()->GetSimTime();
+  last_update_time_ = parent->GetWorld()->SimTime();
 
   // listen to the update event (broadcast every simulation iteration)
-  this->update_connection_ =
-    event::Events::ConnectWorldUpdateBegin(boost::bind(&setJointAngle::UpdateChild, this));
-/*
-  alive_ = true;
+  this->update_connection_ = event::Events::ConnectWorldUpdateBegin(
+      boost::bind(&setJointAngle::UpdateChild, this));
+  /*
+    alive_ = true;
 
-  // ROS: Subscribe to the velocity command topic (usually "cmd_vel")
-  ROS_INFO("%s: Try to subscribe to %s!", gazebo_ros_->info(), command_topic1_.c_str());
-  ros::SubscribeOptions so1 =
-    ros::SubscribeOptions::create<geometry_msgs::Twist>(command_topic1_, 1,
-        boost::bind(&setJointAngle::cmdarm12_Callback, this, _1),
-        ros::VoidPtr(), &queue_);
-  cmd_arm12_subscriber_ = gazebo_ros_->node()->subscribe(so1); // DO NOT REMOVE "cmd_arm12_subscriber_ = "
-  ROS_INFO("%s: Subscribe to %s!", gazebo_ros_->info(), command_topic1_.c_str());
+    // ROS: Subscribe to the velocity command topic (usually "cmd_vel")
+    ROS_INFO("%s: Try to subscribe to %s!", gazebo_ros_->info(),
+    command_topic1_.c_str()); ros::SubscribeOptions so1 =
+      ros::SubscribeOptions::create<geometry_msgs::Twist>(command_topic1_, 1,
+          boost::bind(&setJointAngle::cmdarm12_Callback, this, _1),
+          ros::VoidPtr(), &queue_);
+    cmd_arm12_subscriber_ = gazebo_ros_->node()->subscribe(so1); // DO NOT
+    REMOVE "cmd_arm12_subscriber_ = " ROS_INFO("%s: Subscribe to %s!",
+    gazebo_ros_->info(), command_topic1_.c_str());
 
-  ROS_INFO("%s: Try to subscribe to %s!", gazebo_ros_->info(), command_topic2_.c_str());
-  ros::SubscribeOptions so2 =
-    ros::SubscribeOptions::create<geometry_msgs::Twist>(command_topic2_, 1,
-        boost::bind(&setJointAngle::cmdhand12_Callback, this, _1),
-        ros::VoidPtr(), &queue_);
-  cmd_hand12_subscriber_ = gazebo_ros_->node()->subscribe(so2); // DO NOT REMOVE "cmd_hand12_subscriber_ = "
-  ROS_INFO("%s: Subscribe to %s!", gazebo_ros_->info(), command_topic2_.c_str());
+    ROS_INFO("%s: Try to subscribe to %s!", gazebo_ros_->info(),
+    command_topic2_.c_str()); ros::SubscribeOptions so2 =
+      ros::SubscribeOptions::create<geometry_msgs::Twist>(command_topic2_, 1,
+          boost::bind(&setJointAngle::cmdhand12_Callback, this, _1),
+          ros::VoidPtr(), &queue_);
+    cmd_hand12_subscriber_ = gazebo_ros_->node()->subscribe(so2); // DO NOT
+    REMOVE "cmd_hand12_subscriber_ = " ROS_INFO("%s: Subscribe to %s!",
+    gazebo_ros_->info(), command_topic2_.c_str());
 
-  // start custom queue for diff drive
-  this->callback_queue_thread_ =
-    boost::thread ( boost::bind ( &setJointAngle::QueueThread, this ) );
+    // start custom queue for diff drive
+    this->callback_queue_thread_ =
+      boost::thread ( boost::bind ( &setJointAngle::QueueThread, this ) );
 
-  printf("\n#####################################################\n");
-  printf("#####################################################\n");
-  printf("Type the following command in another terminal.\n");
-  printf("rostopic pub -r 10 /my_arm_robot/cmd_arm12 geometry_msgs/Twist  '{linear:  {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'\n");
-  printf("#####################################################\n");
-  printf("#####################################################\n");
-*/
+    printf("\n#####################################################\n");
+    printf("#####################################################\n");
+    printf("Type the following command in another terminal.\n");
+    printf("rostopic pub -r 10 /my_arm_robot/cmd_arm12 geometry_msgs/Twist
+    '{linear:  {x: 0.1, y: 0.0, z: 0.0}, angular: {x: 0.0,y: 0.0,z: 0.0}}'\n");
+    printf("#####################################################\n");
+    printf("#####################################################\n");
+  */
 }
 
-void setJointAngle::Reset()
-{
-  last_update_time_ = parent->GetWorld()->GetSimTime();
+void setJointAngle::Reset() {
+  last_update_time_ = parent->GetWorld()->SimTime();
 }
 
-void setJointAngle::PID_Control(void)
-{
-  double angleMonitor, angleTarget, order, w = (2*M_PI);
-  for(int i = 0 ; i < maxAngles; i++)
-  {
-    if(0==joints[i])
+void setJointAngle::PID_Control(void) {
+  double angleMonitor, angleTarget, order, w = (2 * M_PI);
+  for (int i = 0; i < maxAngles; i++) {
+    if (0 == joints[i])
       continue;
-    angleMonitor = joints[i]->GetAngle(0).Radian();
-  // printf("Monitor Angle[%d] : %f\n", i, joints_[i]->GetAngle(0).Degree());
+    angleMonitor = joints[i]->Position(0);
+    // printf("Monitor Angle[%d] : %f\n", i, joints_[i]->GetAngle(0).Degree());
 
-    angleTarget = targetAngles[i]/180*M_PI;
-    if(0!=moveFlag && moveJoint==i)
-      angleTarget = moveAngleWidth/180*M_PI * sin(w*parent->GetWorld()->GetSimTime().Double());
+    angleTarget = targetAngles[i] / 180 * M_PI;
+    if (0 != moveFlag && moveJoint == i)
+      angleTarget = moveAngleWidth / 180 * M_PI *
+                    sin(w * parent->GetWorld()->SimTime().Double());
 
-    parent->GetJointController()->SetVelocityPID(
-      joints[i]->GetScopedName(), common::PID(0.4, 1, 0.005));
+    parent->GetJointController()->SetVelocityPID(joints[i]->GetScopedName(),
+                                                 common::PID(0.4, 1, 0.005));
     order = -1000 * (angleMonitor - angleTarget);
     joints[i]->SetForce(0, order);
-    parent->GetJointController()->SetPositionTarget(
-      joints[i]->GetScopedName(), angleTarget); 
-/* Velocity control version (not good)
-    parent->GetJointController()->SetVelocityPID(
-      joints[i]->GetScopedName(), common::PID(0.1, 0, 0));
-    order = -0.1 * (angleMonitor - angleTarget);
-    joints[i]->SetVelocity(0, order);
-*/
+    parent->GetJointController()->SetPositionTarget(joints[i]->GetScopedName(),
+                                                    angleTarget);
+    /* Velocity control version (not good)
+        parent->GetJointController()->SetVelocityPID(
+          joints[i]->GetScopedName(), common::PID(0.1, 0, 0));
+        order = -0.1 * (angleMonitor - angleTarget);
+        joints[i]->SetVelocity(0, order);
+    */
   }
 }
 
-#include <termios.h>
 #include <fcntl.h>
+#include <termios.h>
 
 // To know pushing any key
-int  doslike_kbhit(void)
-{
-  struct termios  oldt, newt;
-  int  ch;
-  int  oldf;
+int doslike_kbhit(void) {
+  struct termios oldt, newt;
+  int ch;
+  int oldf;
   tcgetattr(STDIN_FILENO, &oldt);
   newt = oldt;
   newt.c_lflag &= ~(BRKINT | ISTRIP | IXON);
@@ -280,8 +250,7 @@ int  doslike_kbhit(void)
   ch = getchar();
   tcsetattr(STDIN_FILENO, TCSANOW, &oldt);
   fcntl(STDIN_FILENO, F_SETFL, oldf);
-  if(ch != EOF)
-  {
+  if (ch != EOF) {
     ungetc(ch, stdin);
     return 1;
   }
@@ -290,9 +259,8 @@ int  doslike_kbhit(void)
 
 /////////////////////////////////////////////////
 // To gwt a charactor code of a pushed key
-int  doslike_getch(void)
-{
-  static struct termios  oldt, newt;
+int doslike_getch(void) {
+  static struct termios oldt, newt;
   tcgetattr(STDIN_FILENO, &oldt);
   newt = oldt;
   newt.c_lflag &= ~(BRKINT | ISTRIP | IXON);
@@ -303,35 +271,31 @@ int  doslike_getch(void)
   return c;
 }
 
-void  setJointAngle::check_key_command(void)
-{
-  if(doslike_kbhit())
-  {
-  int cmd = doslike_getch();
-    switch(cmd)
-    {
-/*
-      case 'q': Target_Angles_[FINGER1] += 0.05;
-          break;
-      case 'a': Target_Angles_[FINGER1] -= 0.05;
-          break;
-      case 'w': Target_Angles_[SHOULDERYAW] += 0.05;
-          break;
-      case 's': Target_Angles_[SHOULDERYAW] -= 0.05;
-          break;
-      case 'e': Target_Angles_[SHOULDERPITCH] += 0.05;
-          break;
-      case 'd': Target_Angles_[SHOULDERPITCH] -= 0.05;
-          break;
-*/
+void setJointAngle::check_key_command(void) {
+  if (doslike_kbhit()) {
+    int cmd = doslike_getch();
+    switch (cmd) {
+      /*
+            case 'q': Target_Angles_[FINGER1] += 0.05;
+                break;
+            case 'a': Target_Angles_[FINGER1] -= 0.05;
+                break;
+            case 'w': Target_Angles_[SHOULDERYAW] += 0.05;
+                break;
+            case 's': Target_Angles_[SHOULDERYAW] -= 0.05;
+                break;
+            case 'e': Target_Angles_[SHOULDERPITCH] += 0.05;
+                break;
+            case 'd': Target_Angles_[SHOULDERPITCH] -= 0.05;
+                break;
+      */
     }
   }
 }
 
 // Update the controller
-void setJointAngle::UpdateChild()
-{
-//  check_key_command();
+void setJointAngle::UpdateChild() {
+  //  check_key_command();
   PID_Control();
 }
 
@@ -346,7 +310,8 @@ void setJointAngle::FiniChild()
   callback_queue_thread_.join();
 }
 
-void setJointAngle::cmdarm12_Callback ( const geometry_msgs::Twist::ConstPtr& cmd_msg )
+void setJointAngle::cmdarm12_Callback ( const geometry_msgs::Twist::ConstPtr&
+cmd_msg )
 {
   Target_Angles_[SHOULDERYAW]   = cmd_msg->linear.x;
   Target_Angles_[SHOULDERPITCH] = cmd_msg->linear.y;
@@ -359,7 +324,8 @@ void setJointAngle::cmdarm12_Callback ( const geometry_msgs::Twist::ConstPtr& cm
 //              cmd_msg->angular.x, cmd_msg->angular.y, cmd_msg->angular.z);
 }
 
-void setJointAngle::cmdhand12_Callback ( const geometry_msgs::Twist::ConstPtr& cmd_msg )
+void setJointAngle::cmdhand12_Callback ( const geometry_msgs::Twist::ConstPtr&
+cmd_msg )
 {
   printf("cmdhand12 : x,y,z,r,p,y=%4.2f,%4.2f,%4.2f,%4.2f,%4.2f,%4.2f\n"
             , cmd_msg->linear.x, cmd_msg->linear.y, cmd_msg->linear.z,
@@ -376,6 +342,5 @@ void setJointAngle::QueueThread()
 }
 */
 
-GZ_REGISTER_MODEL_PLUGIN ( setJointAngle )
-}
-
+GZ_REGISTER_MODEL_PLUGIN(setJointAngle)
+} // namespace gazebo

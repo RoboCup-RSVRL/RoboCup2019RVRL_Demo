@@ -4,35 +4,34 @@ You can find other records of the RC2019RVRL game in [wiki page of this reposito
 And you can find important information like the latest rule in [the rescue virtual robot league wiki page](https://rescuesim.robocup.org/).  
 
 ##  INSTALLATION BASICS   
-You can install Ros(Kinetic), Gazebo 8, necessary packages by the following command using the ubuntu 16.04:  
+You can install Ros(Melodic), Gazebo 9, necessary packages by the following command using the ubuntu 18.04:  
 
     $ sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'   
     $ sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-key 0xB01FA116   
     $ sudo sh -c 'echo "deb http://packages.osrfoundation.org/gazebo/ubuntu `lsb_release -cs` main" > /etc/apt/sources.list.d/gazebo-latest.list'   
     $ wget http://packages.osrfoundation.org/gazebo.key -O - | sudo apt-key add -     
     $ sudo apt-get update   
-    $ sudo apt-get install -y cmake g++ protobuf-compiler pavucontrol libignition-math3 libsdformat5 libignition-math3-dev libignition-msgs0-dev gazebo8-plugin-base libgazebo8 libgazebo8-dev ros-kinetic-desktop  ros-kinetic-ros-control ros-kinetic-ros-controllers ros-kinetic-image-view2 ros-kinetic-rqt ros-kinetic-rqt-common-plugins ros-kinetic-joy ros-kinetic-teleop-twist-keyboard ros-kinetic-message-to-tf ros-kinetic-tf2-geometry-msgs ros-kinetic-audio-common ros-kinetic-costmap-2d ros-kinetic-image-transport ros-kinetic-image-transport-plugins ros-kinetic-hector-mapping ros-kinetic-hector-geotiff
-    $ sudo apt-get install ros-kinetic-hector-pose-estimation ros-kinetic-hector-sensors-description ros-kinetic-controller-manager ros-kinetic-gmapping ros-kinetic-move-base ros-kinetic-hector-mapping ros-kinetic-gazebo8*
+    $ sudo apt-get install -y cmake g++ protobuf-compiler pavucontrol gazebo9-plugin-base libgazebo9 libgazebo9-dev ros-melodic-desktop  ros-melodic-ros-control ros-melodic-ros-controllers ros-melodic-image-view2 ros-melodic-rqt ros-melodic-rqt-common-plugins ros-melodic-joy ros-melodic-teleop-twist-keyboard ros-melodic-message-to-tf ros-melodic-tf2-geometry-msgs ros-melodic-audio-common ros-melodic-costmap-2d ros-melodic-image-transport ros-melodic-image-transport-plugins ros-melodic-hector-mapping ros-melodic-hector-geotiff 
+    $ sudo apt-get install ros-melodic-hector-sensors-description ros-melodic-controller-manager ros-melodic-gmapping ros-melodic-move-base ros-melodic-hector-mapping ros-melodic-gazebo9*
 
 
 ## SETUP THE NETWORK CONFIGURATION  
 Check the network folder and setup your computer based on the corresponding files.  
 
 ## SETUP THE SERVER PROGRAM  
-You have to do "catkin_make" 4 times for building WCS.  
-WCS has a custom message type, the message type will be compling later than WCS source codes, even if their dependencies was defined.  
-Thus, please do "catkin_make" 4 times, with ignoring errors about WCS package.  
-After 4 times catkin_make, if you still encount some errors, please contact us.  
+Download this repo. and some additional hector packages.  
 
     $ git clone https://github.com/RoboCupRescueVirtualRobotLeague/RoboCup2019RVRL_Demo  
     $ cd ~/RoboCup2019RVRL_Demo/src  
-    $ git clone -b Gazebo8 https://github.com/taherahmadi/WCS  
-    $ cd ..  
-    $ ./cleanup  
-    $ catkin_make  
-    $ catkin_make  
-    $ catkin_make  
-    $ catkin_make  
+    $ rosinstall src /opt/ros/melodic  
+
+Remove a conflicting package.  
+
+    $ yes | \\rm -r src/hector\_gazebo/hector\_gazebo\_thermal\_camera
+
+Finally, compile them.
+
+    $ catkin\_make  
 
 ## RUN THE SERVER PROGRAM  
 Launch the gazebo server and robots.  
@@ -44,7 +43,7 @@ Then goto the next section "CHECK THE INSTALLATION".
 
     $ cd ~/RoboCup2019RVRL_Demo  
     $ . setup.bash  
-    $ roslaunch rvrl_setup YOU_SELECTED_ONE.launch  
+    $ roslaunch rvrl\_setup YOU\_SELECTED\_ONE.launch  
 
 ### Pre liminary 1 (Day 1)
 * pre1-1_{ atr | eslam | mrl }.launch  

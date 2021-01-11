@@ -113,7 +113,7 @@
           <imageTopicName>camera/thermal/image_raw</imageTopicName>
           <cameraInfoTopicName>camera/thermal/camera_info</cameraInfoTopicName>
           <frameName>thermal_optical_frame</frameName>
-          <interface:camera name="thermal_camera_iface" />
+<!--          <interface:camera name="thermal_camera_iface" /> -->
         </plugin>
       </sensor> -->
 
