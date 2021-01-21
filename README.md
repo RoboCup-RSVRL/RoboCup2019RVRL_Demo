@@ -27,11 +27,11 @@ Download this repo. and some additional hector packages.
 
 Remove a conflicting package.  
 
-    $ yes | \\rm -r src/hector\_gazebo/hector\_gazebo\_thermal\_camera
+    $ yes | \rm -r src/hector_gazebo/hector_gazebo_thermal_camera
 
 Finally, compile them.
 
-    $ catkin\_make  
+    $ catkin_make  
 
 ## RUN THE SERVER PROGRAM  
 Launch the gazebo server and robots.  
@@ -43,7 +43,7 @@ Then goto the next section "CHECK THE INSTALLATION".
 
     $ cd ~/RoboCup2019RVRL_Demo  
     $ . setup.bash  
-    $ roslaunch rvrl\_setup YOU\_SELECTED\_ONE.launch  
+    $ roslaunch rvrl_setup YOU_SELECTED_ONE.launch  
 
 ### Pre liminary 1 (Day 1)
 * pre1-1_{ atr | eslam | mrl }.launch  
@@ -85,6 +85,7 @@ Those robot names are changed for the each team programs.
 
 ## CHECK THE INSTALLATION
 Run the sample robot controller.  
+Before tring below, you should check the robot name by using 'rostopic list'.
 
 ### For wheel robots  
 
